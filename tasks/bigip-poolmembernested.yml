@@ -1,0 +1,14 @@
+---
+- name: "add pool member {{ item[0].name }} to pool {{ pool_name }} in partition {{ partition_name }}"
+  bigip_pool_member:
+    server: "{{ server_name }}"
+    user: "{{ bigip_user }}"
+    password: "{{ bigip_password }}"
+    pool: "{{ pool_name }}"
+    partition: "{{ partition_name }}"
+    host: "{{ item[0].name }}"
+    port: "{{ item[1] }}"
+    state: "present"
+    validate_certs: False
+  delegate_to: localhost
+...

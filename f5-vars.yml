@@ -1,0 +1,21 @@
+---
+  vlan: 104
+  route_domain: "{{ vlan }}"
+  tenant: "widgetcorp4"
+  data_zone: "dmz"
+  projectname: "socialapp"
+  app_environment: "prod"
+  pool_protocol: "http"
+  pool_port: "80"
+  virt_dns_name: "socialapp.widgetcorp.com"
+  virt_port: "80"
+  virt_ipv4_address: "8.8.8.8"
+  virt_persistence_profile: "/Common/hash"
+  nodes:
+    - { ipv4_address: "192.168.1.101", name: "webserver1" }
+    - { ipv4_address: "192.168.1.102", name: "webserver2" }
+    - { ipv4_address: "192.168.1.103", name: "webserver3" }
+  bigip_cluster_members:
+    - { server_name: "192.168.1.253" }
+    - { server_name: "192.168.1.254" }
+...

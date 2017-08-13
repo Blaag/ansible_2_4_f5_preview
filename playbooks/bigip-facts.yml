@@ -1,0 +1,36 @@
+---
+- hosts: "192.168.1.253"
+  gather_facts: no
+  connection: local
+
+  tasks:
+
+  - name: obtain f5 login credentials
+    include_vars: ../f5-secrets.yml
+
+  - name: set fact for server name
+    set_fact:
+      server_name: "{{ inventory_hostname }}"
+
+  - name: gather facts for device group
+    bigip_facts:
+      server: "{{ server_name }}"
+      user: "{{ bigip_user }}"
+      password: "{{ bigip_password }}"
+      include: "device_group"
+      validate_certs: "false"
+    delegate_to: localhost
+    register: blah
+
+  - name: "show facts"
+    debug:
+      msg: "{{ blah }}"
+
+  - name: "show device group"
+    debug:
+      msg: "{{ device_group.keys()[2].split(\"/\")[2] }}"
+
+  #- name: set fact for device group
+    #set_fact:
+      #device_group: "{{ ansible_facts.device_group[0] }}"
+...

@@ -1,0 +1,16 @@
+---
+- name: "create node {{ item.name }} {{ item.ipv4_address }} in partition {{ partition_name }}"
+  bigip_node:
+    server: "{{ server_name }}"
+    user: "{{ bigip_user }}"
+    password: "{{ bigip_password }}"
+    state: "present"
+    partition: "{{ partition_name }}"
+    host: "{{ item.ipv4_address }}"
+    name: "{{ item.name }}"
+    #monitors:
+      #- "/Common/icmp"
+    validate_certs: False
+  delegate_to: localhost
+  failed_when: "false"
+...

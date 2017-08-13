@@ -1,0 +1,50 @@
+---
+- hosts: "192.168.1.253"
+  gather_facts: no
+  connection: local
+
+  tasks:
+
+  - name: obtain f5 login credentials
+    include_vars: ../f5-secrets.yml
+
+  - name: obtain necessary variables
+    include_vars: ../f5-vars.yml
+
+  - name: set fact for partition name
+    set_fact:
+      partition_name: "{{ agency }}-{{ data_zone }}-{{ projectname }}"
+
+  - name: set fact for server name
+    set_fact:
+      server_name: "{{ inventory_hostname }}"
+
+  - name: set fact for vlan name
+    set_fact:
+      vlan_name: "vlan-{{ vlan }}-{{ agency }}-{{ data_zone }}-{{ projectname }}"
+
+  - include: ../tasks/bigip-node.yml
+    vars:
+      ipv4_node_address: "192.168.1.137"
+      node_name: "web1"
+  - include: ../tasks/bigip-node.yml
+    vars:
+      ipv4_node_address: "192.168.1.135"
+      node_name: "web2"
+  #- include: ../tasks/bigip-synctogroup.yml
+    #vars:
+      #- device_group: device-group-failover-aad6e1986d35
+
+  - include: ../tasks/bigip-pool.yml
+
+  - include: ../tasks/bigip-poolmember.yml
+    with_items:
+      - { pool_host: "web1", pool_host_port: "80" }
+      - { pool_host: "web2", pool_host_port: "80" }
+
+  - include: ../tasks/bigip-virtualserver.yml
+
+  - include: ../tasks/bigip-synctogroup.yml
+    vars:
+      - device_group: device-group-failover-aad6e1986d35
+...

@@ -1,0 +1,10 @@
+---
+- name: "run command - {{ item[1] }}"
+  bigip_command:
+    server: "{{ item[0].server_name }}"
+    user: "{{ bigip_user }}"
+    password: "{{ bigip_password }}"
+    commands: "{{ item[1] }}"
+    validate_certs: "false"
+  changed_when: "false"
+...

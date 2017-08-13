@@ -1,0 +1,15 @@
+---
+- name: create routedomain "{{ route_domain }} in partition {{ partition_name }} with id {{ route_domain }}"
+  bigip_routedomain:
+    server: "{{ server_name }}"
+    user: "{{ bigip_user }}"
+    password: "{{ bigip_password }}"
+    state: present
+    id: "{{ route_domain }}"
+    partition: "{{ partition_name }}"
+    vlans:
+      - "{{ vlan_name }}"
+    strict: "enabled"
+    validate_certs: "no"
+  delegate_to: localhost
+...

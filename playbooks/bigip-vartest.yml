@@ -1,0 +1,37 @@
+---
+- hosts: "192.168.1.253"
+  gather_facts: no
+  connection: local
+
+  tasks:
+
+  - name: obtain f5 login credentials
+    include_vars: ../f5-secrets.yml
+
+  - name: obtain f5 vars
+    include_vars: ../f5-vars.yml
+
+  - name: print nodes
+    debug:
+      msg: "node {{ item.name }} with address {{ item.ipv4_address }}"
+    with_items: "{{ nodes }}"
+
+  - name: print bigip servers
+    debug:
+      msg: "bigip with address {{ item[0].server_name }} and command {{ item[1] }}"
+    with_nested:
+      - "{{ bigip_cluster_members }}"
+      - { "COMMAND" }
+
+  - name: count bigip servers
+    debug:
+      msg: "number of cluster members: {{ bigip_cluster_members|length }}"
+
+  - name: return last server in list
+    debug:
+      msg: "server name of last cluster member: {{ bigip_cluster_members[(bigip_cluster_members|length)-1].server_name }}"
+
+  #- name: "show facts"
+    #debug:
+      #msg: "{{ blah }}"
+...

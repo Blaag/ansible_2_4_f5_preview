@@ -1,0 +1,17 @@
+---
+- name: create self ip "{{ ipv4_address }} in vlan {{ vlan_name }} partition {{ partition_name }}"
+  bigip_selfip:
+    server: "{{ server_name }}"
+    user: "{{ bigip_user }}"
+    password: "{{ bigip_password }}"
+    address: "{{ ipv4_address }}"
+    netmask: "{{ipv4_netmask }}"
+    name: "{{ vlan_name }}-{{ selfip_type }}"
+    partition: "{{ partition_name }}"
+    state: "present"
+    vlan: "{{ vlan_name }}"
+    route_domain: "{{ route_domain }}"
+    traffic_group: "{{ traffic_group }}"
+    validate_certs: False
+  delegate_to: localhost
+...

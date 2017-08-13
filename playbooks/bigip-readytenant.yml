@@ -1,0 +1,94 @@
+---
+- hosts: "192.168.1.253"
+  gather_facts: no
+  connection: local
+
+  tasks:
+
+  - name: obtain f5 login credentials
+    include_vars: ../f5-secrets.yml
+
+  - name: obtain necessary variables
+    include_vars: ../f5-vars.yml
+
+  - name: set fact for vlan name
+    set_fact:
+      vlan_name: "vlan-{{ vlan }}-{{ tenant }}-{{ data_zone }}-{{ projectname }}"
+
+  - name: set fact for partition name
+    set_fact:
+      partition_name: "{{ tenant }}-{{ data_zone }}-{{ projectname }}"
+
+  - name: set fact for server name
+    set_fact:
+      server_name: "{{ inventory_hostname }}"
+
+  - name: set fact for last server name
+    set_fact:
+      last_server: "{{ bigip_cluster_members[(bigip_cluster_members|length)-1].server_name }}"
+
+  - include: ../tasks/bigip-devicegroup.yml
+
+  - include: ../tasks/bigip-commandnested.yml
+    with_nested:
+      - "{{ bigip_cluster_members }}"
+      - { "create net route-domain {{ route_domain }} id {{ vlan }} strict enabled" }
+
+  - include: ../tasks/bigip-commandnested.yml
+    with_nested:
+      - "{{ bigip_cluster_members }}"
+      - { "create auth partition {{ partition_name }} default-route-domain {{ vlan }}" }
+
+
+  - include: ../tasks/bigip-synctogroup.yml
+    vars:
+      server_name: "{{ last_server }}"
+
+    # the route domain does not yet exist, so
+    # create the partition in route domain 0
+    # and then change it once the desired route
+    # domain has been created
+
+  #- include: ../tasks/bigip-partition.yml
+    #vars:
+      #- route_domain: 0
+
+  #- include: ../tasks/bigip-vlan.yml
+  #- include: ../tasks/bigip-vlan.yml
+    #vars:
+      #- server_name: "192.168.1.254"
+
+  - include: ../tasks/bigip-vlan.yml
+    with_items: "{{ bigip_cluster_members }}"
+
+  #- include: ../tasks/bigip-routedomain.yml
+  #- include: ../tasks/bigip-routedomain.yml
+    #vars:
+      #- server_name: "192.168.1.254"
+
+  #- include: ../tasks/bigip-partition.yml
+    #vars:
+      #- route_domain: "{{ vlan }}"
+
+  #- include: ../tasks/bigip-selfip.yml
+    #vars:
+      #- ipv4_address: "10.12.50.101"
+      #- ipv4_netmask: "255.255.255.0"
+      #- traffic_group: "/Common/traffic-group-local-only"
+      #- selfip_type: "self"
+  #- include: ../tasks/bigip-selfip.yml
+    #vars:
+      #- server_name: "192.168.1.254"
+      #- ipv4_address: "10.12.50.102"
+      #- ipv4_netmask: "255.255.255.0"
+      #- traffic_group: "/Common/traffic-group-local-only"
+      #- selfip_type: "self"
+  #- include: ../tasks/bigip-selfip.yml
+    #vars:
+      #- ipv4_address: "10.12.50.100"
+      #- ipv4_netmask: "255.255.255.0"
+      #- traffic_group: "/Common/traffic-group-1"
+      #- selfip_type: "float"
+
+  - include: ../tasks/bigip-synctogroup.yml
+...

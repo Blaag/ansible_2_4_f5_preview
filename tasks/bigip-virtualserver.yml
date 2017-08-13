@@ -1,0 +1,24 @@
+---
+- name: "add virtual server {{ virt_dns_name }}-virt-{{ pool_protocol }}-{{ virt_port }}"
+  bigip_virtual_server:
+    server: "{{ server_name }}"
+    user: "{{ bigip_user }}"
+    password: "{{ bigip_password }}"
+    pool: "{{ projectname }}-{{ app_environment }}-pool-{{ pool_protocol }}-{{ pool_port }}"
+    partition: "{{ partition_name }}"
+    port: "{{ virt_port }}"
+    name: "{{ virt_dns_name }}-virt-{{ pool_protocol }}-{{ virt_port }}"
+    destination: "{{ virt_ipv4_address }}"
+    snat: Automap
+    enabled_vlans:
+      - "/{{ partition_name }}/{{ vlan_name }}"
+    default_persistence_profile: "{{ virt_persistence_profile }}"
+    #profiles_server_side:
+      #- "serverssl"
+    #profiles_client_side:
+      #- "clientssl"
+    state: "present"
+    validate_certs: False
+  delegate_to: localhost
+  changed_when: "false"
+...

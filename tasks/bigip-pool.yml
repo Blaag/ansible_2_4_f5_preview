@@ -1,0 +1,13 @@
+---
+- name: create pool "{{ projectname }}-{{ app_environment }}-pool-{{ pool_protocol }}-{{ pool_port }} in partition {{ partition_name }}"
+  bigip_pool:
+    server: "{{ server_name }}"
+    user: "{{ bigip_user }}"
+    password: "{{ bigip_password }}"
+    name: "{{ projectname }}-{{ app_environment }}-pool-{{ pool_protocol }}-{{ pool_port }}"
+    partition: "{{ partition_name }}"
+    lb_method: "least-connections-member"
+    state: "present"
+    validate_certs: False
+  delegate_to: localhost
+...

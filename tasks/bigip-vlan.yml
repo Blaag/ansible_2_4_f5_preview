@@ -1,0 +1,14 @@
+---
+- name: create vlan "{{ vlan_name }} in partition {{ partition_name }}"
+  bigip_vlan:
+    server: "{{ item.server_name }}"
+    user: "{{ bigip_user }}"
+    password: "{{ bigip_password }}"
+    name: "{{ vlan_name }}"
+    validate_certs: False
+    partition: "{{ partition_name }}"
+    state: present
+    tag: "{{ vlan }}"
+    tagged_interfaces:
+      - "1.1"
+...

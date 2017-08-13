@@ -1,0 +1,14 @@
+---
+- name: gather facts for device group
+  bigip_facts:
+    server: "{{ server_name }}"
+    user: "{{ bigip_user }}"
+    password: "{{ bigip_password }}"
+    include: "device_group"
+    validate_certs: "false"
+  delegate_to: localhost
+
+- name: set fact for device group
+  set_fact: 
+      bigip_device_group: "{{ device_group.keys()[2].split(\"/\")[2] }}"
+...
