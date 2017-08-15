@@ -1,5 +1,5 @@
 ---
-- name: sync to group
+- name: sync last device to group
   bigip_configsync_actions:
     server: "{{ server_name }}"
     user: "{{ bigip_user }}"
@@ -7,4 +7,5 @@
     validate_certs: False
     device_group: "{{ bigip_device_group }}"
     sync_device_to_group: yes
+  failed_when: "false"
 ...

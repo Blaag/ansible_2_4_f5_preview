@@ -7,4 +7,5 @@
     validate_certs: False
     device_group: "{{ bigip_device_group }}"
     sync_device_to_group: yes
+  failed_when: "false"
 ...

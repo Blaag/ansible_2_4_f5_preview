@@ -11,38 +11,6 @@
   - name: obtain necessary variables
     include_vars: ../f5-vars.yml
 
-  #- name: set fact for partition name
-    #set_fact:
-      #partition_name: "{{ tenant }}-{{ data_zone }}-{{ projectname }}"
-
-  #- name: set fact for server name
-    #set_fact:
-      #server_name: "{{ inventory_hostname }}"
-
-  #- name: set fact for vlan name
-    #set_fact:
-      #vlan_name: "vlan-{{ vlan }}-{{ tenant }}-{{ data_zone }}-{{ projectname }}"
-
-  #- name: set fact for pool name
-    #set_fact:
-      #pool_name: "{{ projectname }}-{{ app_environment }}-pool-{{ pool_protocol }}-{{ pool_port }}"
-
   - include_role:
       name: newvip
-
-  #- include: ../tasks/bigip-devicegroup.yml
-
-  #- include: ../tasks/bigip-node.yml
-    #with_items: "{{ nodes }}"
-
-  #- include: ../tasks/bigip-pool.yml
-
-  #- include: ../tasks/bigip-poolmembernested.yml
-    #with_nested:
-      #- "{{ nodes }}"
-      #- "{{ pool_port }}"
-
-  #- include: ../tasks/bigip-virtualserver.yml
-
-  #- include: ../tasks/bigip-synctogroup.yml
 ...

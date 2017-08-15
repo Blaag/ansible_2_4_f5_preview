@@ -11,42 +11,6 @@
   - name: obtain necessary variables
     include_vars: ../f5-vars.yml
 
-  #- name: set fact for vlan name
-    #set_fact:
-      #vlan_name: "vlan-{{ vlan }}-{{ tenant }}-{{ data_zone }}-{{ projectname }}"
-
-  #- name: set fact for partition name
-    #set_fact:
-      #partition_name: "{{ tenant }}-{{ data_zone }}-{{ projectname }}"
-
-  #- name: set fact for server name
-    #set_fact:
-      #server_name: "{{ inventory_hostname }}"
-
-  #- name: set fact for last server name
-    #set_fact:
-      #last_server: "{{ bigip_cluster_members[(bigip_cluster_members|length)-1].server_name }}"
-
   - include_role:
       name: newtenant
-
-  #- include: ../tasks/bigip-selfip.yml
-    #vars:
-      #- ipv4_address: "10.12.50.101"
-      #- ipv4_netmask: "255.255.255.0"
-      #- traffic_group: "/Common/traffic-group-local-only"
-      #- selfip_type: "self"
-  #- include: ../tasks/bigip-selfip.yml
-    #vars:
-      #- server_name: "192.168.1.254"
-      #- ipv4_address: "10.12.50.102"
-      #- ipv4_netmask: "255.255.255.0"
-      #- traffic_group: "/Common/traffic-group-local-only"
-      #- selfip_type: "self"
-  #- include: ../tasks/bigip-selfip.yml
-    #vars:
-      #- ipv4_address: "10.12.50.100"
-      #- ipv4_netmask: "255.255.255.0"
-      #- traffic_group: "/Common/traffic-group-1"
-      #- selfip_type: "float"
 ...
