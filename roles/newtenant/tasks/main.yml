@@ -1,0 +1,29 @@
+---
+- name: determine device group
+  include_role:
+    name: common
+    tasks_from: bigip_devicegroup
+
+- include: bigip_commandnested/bigip_commandnested.yml
+  with_nested:
+    - "{{ bigip_cluster_members }}"
+    - { "create net route-domain {{ route_domain }} id {{ vlan }} strict enabled" }
+
+- include: bigip_commandnested/bigip_commandnested.yml
+  with_nested:
+    - "{{ bigip_cluster_members }}"
+    - { "create auth partition {{ partition_name }} default-route-domain {{ vlan }}" }
+
+- include: bigip_synclasttogroup/bigip_synclasttogroup.yml
+  vars:
+    server_name: "{{ last_server }}"
+
+- include: bigip_vlan/bigip_vlan.yml
+  with_items: "{{ bigip_cluster_members }}"
+
+- include: bigip_selfipitems/bigip_selfipitems.yml
+  with_items: "{{ bigip_self_ips }}"
+  notify:
+    - sync to group
+...
+

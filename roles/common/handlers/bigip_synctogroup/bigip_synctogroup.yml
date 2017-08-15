@@ -1,10 +1,10 @@
 ---
-- name: sync most recent configuration to device
+- name: sync to group
   bigip_configsync_actions:
     server: "{{ server_name }}"
     user: "{{ bigip_user }}"
     password: "{{ bigip_password }}"
     validate_certs: False
-    device_group: "{{ device_group }}"
-    sync_most_recent_to_device: yes
+    device_group: "{{ bigip_device_group }}"
+    sync_device_to_group: yes
 ...

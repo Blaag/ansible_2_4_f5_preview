@@ -1,0 +1,21 @@
+---
+- name: determine device group
+  include_role:
+    name: common
+    tasks_from: bigip_devicegroup
+
+- include: bigip_node/bigip_node.yml
+  with_items: "{{ nodes }}"
+
+- include: bigip_pool/bigip_pool.yml
+
+- include: bigip_poolmembernested/bigip_poolmembernested.yml
+  with_nested:
+    - "{{ nodes }}"
+    - "{{ pool_port }}"
+
+- include: bigip_virtualserver/bigip_virtualserver.yml
+  notify:
+    - sync to group
+...
+

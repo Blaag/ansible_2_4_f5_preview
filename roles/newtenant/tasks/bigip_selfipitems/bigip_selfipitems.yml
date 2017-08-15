@@ -1,0 +1,11 @@
+---
+- name: "add self ip {{ vlan_name }}-self with address {{ item.ipv4_address }}"
+  bigip_command:
+    server: "{{ item.server_name }}"
+    user: "{{ bigip_user }}"
+    password: "{{ bigip_password }}"
+    #commands: "cd /{{ partition_name }} ; create net self {{ vlan_name }}-self address {{ item.ipv4_address }} traffic-group traffic-group-local-only vlan {{ vlan_name }}"
+    commands: "cd /{{ partition_name }}"
+    validate_certs: "false"
+  changed_when: "false"
+...

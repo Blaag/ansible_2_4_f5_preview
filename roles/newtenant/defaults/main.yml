@@ -1,0 +1,14 @@
+---
+# defaults file for newtenant
+  vlan: 1
+  route_domain: "{{ vlan }}"
+  tenant: "widgetcorp"
+  data_zone: "dmz"
+  projectname: "socialapp"
+  app_environment: "test"
+  bigip_cluster_members:
+    - { server_name: "192.168.1.253" }
+    - { server_name: "192.168.1.254" }
+  last_server: "{{ bigip_cluster_members[(bigip_cluster_members|length)-1].server_name }}"
+...
+
