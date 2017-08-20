@@ -17,5 +17,5 @@ virt_persistence_profile: The VIP persistence profile<br>
 
 Last, run the playbooks in the playbook directory.
 
-ansible-playbook bigip-newtenant.yml
+ansible-playbook bigip-newtenant.yml<br>
 ansible-playbook bigip-newvip.yml
