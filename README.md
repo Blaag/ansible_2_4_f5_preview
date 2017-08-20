@@ -4,7 +4,9 @@ To use, edit the f5-secrets.yml in this directory and supply the necessary crede
 
 ---
   bigip_user: admin
+
   bigip_password: secret
+
 ...
 
 Next, edit f5-vars.yml appropriately. The values and their intent are listed below.
