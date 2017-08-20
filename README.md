@@ -17,6 +17,13 @@ virt_port: The port the VIP listens on<br>
 virt_ipv4_address: The IP address assigned to the VIP<br>
 virt_persistence_profile: The VIP persistence profile<br>
 
+The python list "nodes" contains all the names and addresses of the nodes that will be placed in the pool.
+
+The python list "bigip_cluster_members" contains the management addresses of the cluster members. It can contain more than two values. Ansible uses these addresses for configuration.
+
+The python list "bigip_self_ips" controls what self IPs are assigned to the cluster members. There must be one self IP for each, and they are assigned in respective order, e.g. the first cluster member gets the first self IP.
+
+
 3) Run the playbooks.
 
 ansible-playbook bigip-newtenant.yml<br>
