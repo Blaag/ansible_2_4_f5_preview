@@ -15,3 +15,7 @@ virt_port: The port the VIP listens on<br>
 virt_ipv4_address: The IP address assigned to the VIP<br>
 virt_persistence_profile: The VIP persistence profile<br>
 
+Last, run the playbooks in the playbook directory.
+
+ansible-playbook bigip-newtenant.yml
+ansible-playbook bigip-newvip.yml
