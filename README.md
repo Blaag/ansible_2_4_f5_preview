@@ -1,8 +1,10 @@
 The playbooks and roles are previews to the F5 modules included in Ansible 2.4
 
-To use, edit the f5-secrets.yml in this directory and supply the necessary credentials.
+To use:
 
-Next, edit f5-vars.yml appropriately. The values and their intent are listed below.
+1) Edit the f5-secrets.yml in this directory and supply the necessary credentials.
+
+2) Edit f5-vars.yml appropriately. The values and their intent are listed below.
 
 tenant: The name of the customer or company<br>
 data_zone: Allows the VLAN to be easily recognized as being in a DMZ, internal, or for a particular group such as accounting<br>
@@ -15,7 +17,7 @@ virt_port: The port the VIP listens on<br>
 virt_ipv4_address: The IP address assigned to the VIP<br>
 virt_persistence_profile: The VIP persistence profile<br>
 
-Last, run the playbooks.
+3) Run the playbooks.
 
 ansible-playbook bigip-newtenant.yml<br>
 ansible-playbook bigip-newvip.yml
